@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
-
+import { useNavigate } from 'react-router-dom'; 
 import type { GiftItem } from '@/constants/GiftItem';
 
-
 const GiftItemCard = ({ item }: { item: GiftItem }) => {
+  const navigate = useNavigate(); 
+
+  const handleClick = () => {
+    navigate(`/order/${item.id}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleClick}> 
       <Image src={item.imageURL} alt={item.name} />
       <Name>{item.name}</Name>
       <Brand>{item.brandInfo.name}</Brand>
@@ -21,6 +26,7 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 12px;
+  cursor: pointer;
 `;
 
 const Image = styled.img`

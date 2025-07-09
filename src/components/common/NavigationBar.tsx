@@ -49,8 +49,6 @@ const NavigationBar = () => {
 
 export default NavigationBar;
 
-// ---------------------- styled-components ----------------------
-
 const NavBar = styled.header`
   position: relative;
   display: flex;

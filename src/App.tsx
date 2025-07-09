@@ -8,13 +8,14 @@ import GiftRankingGrid from '@/components/GiftRanking/GiftRankingGrid';
 import LoginPage from '@/pages/loginpage';
 import MyPage from '@/pages/MyPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import OrderPage from '@/pages/OrderPage';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 const ProtectedRoute = ({ children }: { children: ReactElement }) => {
   const { user, isLoading } = useAuth();
 
-  if (isLoading) return null; 
+  if (isLoading) return null;
 
   return user ? children : <Navigate to="/login" replace />;
 };
@@ -44,6 +45,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <MyPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/order/:id" 
+                element={
+                  <ProtectedRoute>
+                    <OrderPage />
                   </ProtectedRoute>
                 }
               />

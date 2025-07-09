@@ -14,8 +14,6 @@ const LoginFormSection = ({ onLoginSuccess }: Props) => {
     pw,
     setId,
     setPw,
-    idTouched,
-    pwTouched,
     setIdTouched,
     setPwTouched,
     idError,
