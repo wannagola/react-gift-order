@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useLocalStorageState } from '@/hooks/useLocalStorageState'; // 커스텀 훅 import
 
 type User = {
   id: string;
@@ -16,30 +17,11 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useLocalStorageState<User | null>('authUser', null);
+  const [isLoading] = useState(false);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('authUser');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (err) {
-        console.error('storedUser JSON parsing error', err);
-      }
-    }
-    setIsLoading(false);
-  }, []);
-
-  const login = (user: User) => {
-    setUser(user);
-    localStorage.setItem('authUser', JSON.stringify(user));
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('authUser');
-  };
+  const login = (user: User) => setUser(user);
+  const logout = () => setUser(null);
 
   return (
     <AuthContext.Provider value={{ user, login, logout, isLoading }}>
