@@ -1,16 +1,10 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import type { GiftItem } from '@/constants/GiftItem';
 
 const GiftItemCard = ({ item }: { item: GiftItem }) => {
-  const navigate = useNavigate(); 
-
-  const handleClick = () => {
-    navigate(`/order/${item.id}`);
-  };
-
   return (
-    <Card onClick={handleClick}> 
+    <Card to={`/order/${item.id}`}>
       <Image src={item.imageURL} alt={item.name} />
       <Name>{item.name}</Name>
       <Brand>{item.brandInfo.name}</Brand>
@@ -21,11 +15,14 @@ const GiftItemCard = ({ item }: { item: GiftItem }) => {
 
 export default GiftItemCard;
 
-const Card = styled.div`
+
+const Card = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px;
+  text-decoration: none;   
+  color: inherit;         
   cursor: pointer;
 `;
 
