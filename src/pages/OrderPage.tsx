@@ -13,17 +13,17 @@ const OrderPage = () => {
 
   const [selectedCardId, setSelectedCardId] = useState<number>(messageCards[0].id);
   const selectedCard = messageCards.find((c) => c.id === selectedCardId);
+
   const handleOrderSubmit = (form: OrderFormData) => {
     alert(
       `주문이 완료되었습니다.\n` +
-      `상품명: ${product!.name}\n` +
-      `구매 수량: ${form.quantity}\n` +
-      `발신자 이름: ${form.sender}\n` +
-      `메시지: ${form.message}`
+        `상품명: ${product!.name}\n` +
+        `구매 수량: ${form.quantity}\n` +
+        `발신자 이름: ${form.sender}\n` +
+        `메시지: ${form.message}`
     );
     navigate('/');
   };
-
 
   if (!product || !selectedCard) return <div>상품을 찾을 수 없습니다.</div>;
 
@@ -35,8 +35,8 @@ const OrderPage = () => {
           {messageCards.map((card) => (
             <MessageCardThumb
               key={card.id}
-              src={card.imageUrl}
-              alt={card.label}
+              src={card.thumbUrl} // ✅ thumbUrl 사용
+              alt={card.defaultTextMessage} // ✅ label → defaultTextMessage
               isSelected={card.id === selectedCardId}
               onClick={() => setSelectedCardId(card.id)}
             />
@@ -46,8 +46,8 @@ const OrderPage = () => {
 
       <Section>
         <SelectedCardSection>
-          <SelectedImage src={selectedCard.imageUrl} alt={selectedCard.label} />
-          <CardLabel>{selectedCard.label}</CardLabel>
+          <SelectedImage src={selectedCard.imageUrl} alt={selectedCard.defaultTextMessage} />
+          <CardLabel>{selectedCard.defaultTextMessage}</CardLabel>
         </SelectedCardSection>
       </Section>
 

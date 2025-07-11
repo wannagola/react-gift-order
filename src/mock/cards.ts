@@ -1,11 +1,11 @@
-export type cards = {
+export type Card = {
   id: number;
   thumbUrl: string;
   imageUrl: string;
   defaultTextMessage: string;
 };
 
-export const messageCards: cards[] = [
+export const messageCards: Card[] = [
   {
     id: 904,
     thumbUrl: 'https://t1.daumcdn.net/gift/message-card/template/image/20240124_VGPJE.png',

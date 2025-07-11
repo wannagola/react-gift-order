@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react';
 import styled from '@emotion/styled';
 import NavigationBar from '@/components/common/NavigationBar';
 import CategorySection from '@/components/home/CategorySection';
