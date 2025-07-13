@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-
+import { Link, generatePath } from 'react-router-dom';
 import type { GiftItem } from '@/constants/GiftItem';
-
+import { ORDER_ROUTE } from '@/constants/path';
 
 const GiftItemCard = ({ item }: { item: GiftItem }) => {
+  const orderPath = generatePath(ORDER_ROUTE, { id: String(item.id) });
+
   return (
-    <Card>
+    <Card to={orderPath}>
       <Image src={item.imageURL} alt={item.name} />
       <Name>{item.name}</Name>
       <Brand>{item.brandInfo.name}</Brand>
@@ -16,11 +18,14 @@ const GiftItemCard = ({ item }: { item: GiftItem }) => {
 
 export default GiftItemCard;
 
-const Card = styled.div`
+const Card = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 `;
 
 const Image = styled.img`

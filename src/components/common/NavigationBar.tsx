@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiChevronLeft, FiUser } from 'react-icons/fi';
+import { useAuth } from '@/contexts/AuthContext';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { user, isLoading } = useAuth();
 
   const handleBack = () => {
     navigate(-1);
-  };
-
-  const handleLogin = () => {
-    navigate('/login');
   };
 
   return (
@@ -24,13 +22,15 @@ const NavigationBar = () => {
       </Left>
 
       <Center>
-        <Title>선물하기</Title>
+        <Title to="/">선물하기</Title> 
       </Center>
 
       <Right>
-        <IconButton onClick={handleLogin}>
-          <FiUser size={24} color={theme.textColors.default} />
-        </IconButton>
+        {!isLoading && (
+          <IconLink to={user ? '/my' : '/login'}>
+            <FiUser size={24} color={theme.textColors.default} />
+          </IconLink>
+        )}
       </Right>
     </NavBar>
   );
@@ -68,12 +68,29 @@ const Right = styled.div`
   align-items: center;
 `;
 
-const Title = styled.span`
+const Title = styled(Link)`
   font: ${({ theme }) => theme.typography.title2Bold};
   color: ${({ theme }) => theme.textColors.default};
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  text-decoration: none;
 `;
 
 const IconButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+`;
+
+const IconLink = styled(Link)`
   background: none;
   border: none;
   cursor: pointer;

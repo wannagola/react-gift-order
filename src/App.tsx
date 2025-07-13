@@ -5,30 +5,55 @@ import FriendSelectSection from '@/components/home/FriendSelectSection';
 import BannerSection from '@/components/home/BannerSection';
 import GiftRankingGrid from '@/components/GiftRanking/GiftRankingGrid';
 import LoginPage from '@/pages/loginpage';
+import MyPage from '@/pages/MyPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import OrderPage from '@/pages/OrderPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/common/ProtectedRoute'; 
 
 function App() {
   return (
-    <Router>
-      <AppContainer>
-        <AppInner>
-          <NavigationBar />
-          <Routes>
-            <Route path="/" element={
-              <>
-                <FriendSelectSection />
-                <CategorySection />
-                <BannerSection />
-                <GiftRankingGrid />
-              </>
-            } />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </AppInner>
-      </AppContainer>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContainer>
+          <AppInner>
+            <NavigationBar />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <FriendSelectSection />
+                    <CategorySection />
+                    <BannerSection />
+                    <GiftRankingGrid />
+                  </>
+                }
+              />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/my"
+                element={
+                  <ProtectedRoute>
+                    <MyPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </AppInner>
+        </AppContainer>
+      </Router>
+    </AuthProvider>
   );
 }
 
